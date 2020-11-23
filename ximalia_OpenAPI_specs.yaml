@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: CalcCo2Emission
+  description: Co2 emission calculation and compensation API
+  version: '0.1.0'
+  contact:
+    email: jian.guo@ximalia.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+
+servers:
+  - url: http://ximalia.com/v0.1
+    description: Main production server
+  # - url: http://localhost/v0.1
+  #   descritpion: Internal dev server
+
+paths:
+  /CalcCo2Emission/{origin}{destination}:
+    get:
+      summary: Return estimated co2 emission
+      parameters:
+        - name: origin
+          in: path
+          required: true
+          description: where does the trip begin
+          schema:
+            type: string
+            format: string
+        - name: destination
+          in: path
+          required: true
+          description: where does the trip end
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: A Json array of emission estimation
+          content:
+            application/json:
+              schema:
+                type: number
+        '400':
+          description: specified location is invalid.
+        '404':
+          description: location was not found.
+        default:
+          description: Unexpected error
+  /CalcCo2Compensation/{Co2EmissionAmount}:
+    get:
+      # summmary: Return the number of trees to compensate the CO2 emission
+      parameters:
+        - name : Co2EmissionAmount
+          in: path
+          required: true
+          description: in metric ton / year
+          schema:
+            type: number
+      responses:
+        '200':
+          description: a number of how many trees one needs to plant
+          content:
+            application/json:
+              schema:
+                type: number
+        '400':
+          description: specified amount is invalid.
+        '404':
+          description: amount was not found.
+        default:
+          description: Unexpected error
+            
+      

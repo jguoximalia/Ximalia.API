@@ -27,7 +27,7 @@ public class FunctionTest {
         final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
 
         final Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("Co2EmissionAmount", "Azure");
+        queryParams.put("Co2EmissionAmount", "1236582");
         doReturn(queryParams).when(req).getQueryParameters();
 
         final Optional<String> queryBody = Optional.empty();
