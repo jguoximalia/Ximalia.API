@@ -16,14 +16,15 @@ import java.util.Optional;
  */
 public class Function {
     /**
-     * This function listens at endpoint "/api/CalcCo2Compensation". Two ways to invoke it
-     * using "curl" command in bash: 1. curl -d "HTTP Body" {your
-     * host}/api/CalcCo2Compensation 2. curl "{your host}/api/CalcCo2Compensation?Co2EmissionAmount=HTTP%20Query"
+     * This function listens at endpoint "/api/CalcCo2Compensation". Two ways to
+     * invoke it using "curl" command in bash: 1. curl -d "HTTP Body" {your
+     * host}/api/CalcCo2Compensation 2. curl "{your
+     * host}/api/CalcCo2Compensation?Co2EmissionAmount=HTTP%20Query"
      */
     @FunctionName("CalcCo2Compensation")
-    public HttpResponseMessage run(@HttpTrigger(name = "req", methods = {HttpMethod.GET}, 
-        authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
-        final ExecutionContext context) {
+    public HttpResponseMessage run(@HttpTrigger(name = "req", methods = {
+            HttpMethod.GET }, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
         context.getLogger().info("Java HTTP trigger processed a request.");
 
         // Parse query parameter
@@ -34,7 +35,10 @@ public class Function {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
                     .body("Please pass a numberic value on the query string or in the request body").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body("When your CO2 emission is "+co2_emission+" metric ton per year,"+" you need to plant " + co2_emission + " trees to offset.").build();
+            return request
+                    .createResponseBuilder(HttpStatus.OK).body("When your CO2 emission is " + co2_emission
+                            + " metric ton per year," + " you need to plant " + co2_emission + " trees to offset.")
+                    .build();
         }
     }
 }
