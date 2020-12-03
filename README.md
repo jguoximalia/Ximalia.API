@@ -47,8 +47,8 @@ On GitHub saved in this depositary. To be synced with repos from Azure DevOps.
 
 ## CI/CD Pipeline
 
-More on Azure DevOps
+pom.xml describes build and deploy. Azure DevOps offers pipeline
 
 ## Testing
 
-More on Azure DevOps
+Built in testing. More test cases to be written in test class.
