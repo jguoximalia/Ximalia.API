@@ -36,7 +36,7 @@ public class Function {
                     .body("Please pass a value on the query string or in the request body").build();
         } else {
             double co2EmissionValue = Double.valueOf(co2Emission);
-            double conversionFactor = 1.21d;
+            double conversionFactor = 1.1d;
             return request
                     .createResponseBuilder(HttpStatus.OK).body("When your CO2 emission is " + co2Emission
                             + " metric ton per year," + " you need to plant " + 

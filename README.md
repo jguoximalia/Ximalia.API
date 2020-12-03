@@ -26,6 +26,12 @@ Check your setup
 
 `java -version`
 
+To build and serve functions locally:
+```
+mvn clean package
+mvn azure-functions:run
+```
+
 ## Source Control
 On GitHub saved in this depositary. To be synced with repos from Azure DevOps.
 
