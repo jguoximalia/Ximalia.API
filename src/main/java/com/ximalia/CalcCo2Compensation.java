@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * Azure Functions with HTTP Trigger.
  */
-public class Function {
+public class CalcCo2Compensation {
     /**
      * This function listens at endpoint "/api/CalcCo2Compensation". Two ways to
      * invoke it using "curl" command in bash: 1. curl -d "HTTP Body" {your

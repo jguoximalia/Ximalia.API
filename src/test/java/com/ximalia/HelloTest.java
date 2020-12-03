@@ -14,9 +14,9 @@ import static org.mockito.Mockito.*;
 
 
 /**
- * Unit test for Function class.
+ * Unit test for Hello class.
  */
-public class FunctionTest {
+public class HelloTest {
     /**
      * Unit test for HttpTriggerJava method.
      */
@@ -27,7 +27,7 @@ public class FunctionTest {
         final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
 
         final Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("Co2EmissionAmount", "1236582");
+        queryParams.put("name", "Azure");
         doReturn(queryParams).when(req).getQueryParameters();
 
         final Optional<String> queryBody = Optional.empty();
@@ -45,7 +45,7 @@ public class FunctionTest {
         doReturn(Logger.getGlobal()).when(context).getLogger();
 
         // Invoke
-        final HttpResponseMessage ret = new Function().run(req, context);
+        final HttpResponseMessage ret = new Hello().run(req, context);
 
         // Verify
         assertEquals(ret.getStatus(), HttpStatus.OK);

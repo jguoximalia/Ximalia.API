@@ -28,12 +28,10 @@ hs_err_pid*
 .settings/
 .project
 .classpath
-.vscode
 
 # macOS
 .DS_Store
 
 # Azure Functions
-local.settings.json
 bin/
 obj/
