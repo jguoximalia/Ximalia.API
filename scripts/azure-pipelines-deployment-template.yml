@@ -1,0 +1,26 @@
+jobs:
+- deployment: Deploy
+  displayName: "Deploy RM Azure Functons"
+  environment: $
+  pool:
+    vmImage: 'VS2017-Win2016'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: DownloadBuildArtifacts@0
+          displayName: 'Download the build artifacts'
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.DefaultWorkingDirectory)'
+
+        - task: AzureFunctionApp@1
+          displayName: Release package to Azure Funcion App
+          inputs:
+            azureSubscription: $
+            appType: functionApp
+            appName: $
+            resourceGroupName: $
+            package: $(System.DefaultWorkingDirectory)/_Ximalia.API.functions-Maven-CI/drop/target/azure-functions/ximalia-api-functions

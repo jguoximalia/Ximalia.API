@@ -1,0 +1,50 @@
+trigger:
+- master
+
+stages:
+- stage: Build
+  displayName: 'Build RM Azure Functions'
+  jobs:
+  - template: azure-pipelines-build-template.yml
+
+- stage: DeployDEV
+  displayName: 'Deploy to DEV environment'
+  condition: succeeded()
+  dependsOn: Build
+  variables:
+  - group: 'rm-function-apps-dev-env-variable-group'
+  jobs:
+  - template: azure-pipelines-deployment-template.yml
+    parameters:
+      azureConnectionName: '$(AzureConnectionName)'
+      funcAppName: '$(functionAppName)'
+      resourceGroupName: '$(resourceGroupName)'
+      environment: 'DEV'
+
+- stage: DeployTEST
+  displayName: 'Deploy to TEST environment'
+  condition: succeeded()
+  dependsOn: Build
+  variables:
+  - group: 'rm-function-apps-test-env-variable-group'
+  jobs:
+  - template: azure-pipelines-deployment-template.yml
+    parameters:
+      azureConnectionName: '$(AzureConnectionName)'
+      funcAppName: '$(FuncAppName)'
+      resourceGroupName: '$(ResourceGroupName)'
+      environment: 'TEST'
+
+- stage: DeployPROD
+  displayName: 'Deploy to PROD environment'
+  condition: succeeded()
+  dependsOn: Build
+  variables:
+  - group: 'rm-function-apps-prod-env-variable-group'
+  jobs:
+  - template: azure-pipelines-deployment-template.yml
+    parameters:
+      azureConnectionName: '$(AzureConnectionName)'
+      funcAppName: '$(FuncAppName)'
+      resourceGroupName: '$(ResourceGroupName)'
+      environment: 'PROD'
