@@ -19,8 +19,8 @@ jobs:
         - task: AzureFunctionApp@1
           displayName: Release package to Azure Funcion App
           inputs:
-            azureSubscription: $
+            azureSubscription: $(AzureConnectionName)
             appType: functionApp
-            appName: $
-            resourceGroupName: $
+            appName: $(functionAppName)
+            resourceGroupName: $(resourceGroupName)
             package: $(System.DefaultWorkingDirectory)/_Ximalia.API.functions-Maven-CI/drop/target/azure-functions/ximalia-api-functions
