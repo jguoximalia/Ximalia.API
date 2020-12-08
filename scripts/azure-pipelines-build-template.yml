@@ -1,15 +1,6 @@
-variables:
-- name: BuildParameters.mavenPOMFile
-  value: pom.xml
-name: $(date:yyyyMMdd)$(rev:.r)
-resources:
-  repositories:
-  - repository: self
-    type: git
-    ref: main
 jobs:
-- job: Job_1
-  displayName: Agent job 1
+- job: 'Build'
+  displayName: 'Build Java Azure functions'
   pool:
     vmImage: ubuntu-16.04
   steps:
@@ -30,4 +21,3 @@ jobs:
     condition: succeededOrFailed()
     inputs:
       PathtoPublish: $(build.artifactstagingdirectory)
-...
