@@ -12,7 +12,7 @@ stages:
   condition: succeeded()
   dependsOn: Build
   variables:
-  - group: 'rm-function-apps-dev-env-variable-group'
+  - group: 'java-function-apps-dev-env-variable-group'
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
@@ -26,7 +26,7 @@ stages:
   condition: succeeded()
   dependsOn: Build
   variables:
-  - group: 'rm-function-apps-test-env-variable-group'
+  - group: 'java-function-apps-test-env-variable-group'
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
@@ -40,7 +40,7 @@ stages:
   condition: succeeded()
   dependsOn: Build
   variables:
-  - group: 'rm-function-apps-prod-env-variable-group'
+  - group: 'java-function-apps-prod-env-variable-group'
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
