@@ -41,7 +41,7 @@ stages:
     jobs:
       - deployment: Deploy
         pool:
-          vmImage: "ubuntu-18.04"
+          vmImage: "ubuntu-latest"
         environment: Dev
         variables:
           - group: release
@@ -67,7 +67,7 @@ stages:
     jobs:
       - deployment: Deploy
         pool:
-          vmImage: "ubuntu-18.04"
+          vmImage: "ubuntu-latest"
         environment: Test
         variables:
           - group: release
@@ -93,7 +93,7 @@ stages:
     jobs:
       - deployment: Deploy
         pool:
-          vmImage: "ubuntu-18.04"
+          vmImage: "ubuntu-latest"
         environment: Staging
         variables:
           - group: release
