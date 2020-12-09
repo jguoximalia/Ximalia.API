@@ -54,7 +54,7 @@ stages:
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
-                    azureSubscription: $(azureServiceConnection)
+                    azureSubscription: Azure_Development_Support_Plan
                     appType: functionApp
                     appName: $(FuncAppDevName)
                     resourceGroupName: $(resourceGroupName)
@@ -80,7 +80,7 @@ stages:
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
-                    azureSubscription: $(azureServiceConnection)
+                    azureSubscription: Azure_Development_Support_Plan
                     appType: functionApp
                     appName: $(FuncAppTestName)
                     resourceGroupName: $(resourceGroupName)
@@ -106,7 +106,7 @@ stages:
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
-                    azureSubscription: $(azureServiceConnection)
+                    azureSubscription: Azure_Development_Support_Plan
                     appType: functionApp
                     appName: $(FuncAppStageName)
                     resourceGroupName: $(resourceGroupName)
