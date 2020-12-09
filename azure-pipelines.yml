@@ -1,4 +1,4 @@
-# at the top of your YAML file 
+# at the top of your YAML file
 # set some variables that you'll need when you deploy
 variables:
   # the name of the service connection that you created above
@@ -12,109 +12,109 @@ variables:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 stages:
-- stage: 'Build'
-  displayName: 'Build the function app'
-  jobs: 
-  - job: 'Build'
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '1.8'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        goals: 'package'
-        
-    # to deploy to your app service
-    - task: CopyFiles@2
-      displayName: Copy Files
-      inputs:
-        SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(appName)
-        Contents: '**'
-        TargetFolder: $(build.artifactstagingdirectory)   
-
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Artifact
-      inputs:
-        PathtoPublish: $(build.artifactstagingdirectory)    
-
-- stage: 'Dev'
-  displayName: 'Deploy function app to dev env'
-  dependsOn: Build
-  condition: succeeded()
-  jobs: 
-  - deployment: Deploy
-    pool:
-      vmImage: 'ubuntu-18.04'
-    environment: dev
-    variables:
-    - group: java-function-apps-dev-env-variable-group
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: Azure Function App deploy
+  - stage: "Build"
+    displayName: "Build the function app"
+    jobs:
+      - job: "Build"
+        steps:
+          - task: Maven@3
             inputs:
-              azureSubscription: $(AzureConnectionName)
-              appType: functionApp
-              appName: $(functionAppName)
-              resourceGroupName: $(resourceGroupName)
-              package: $(build.artifactstagingdirectory)
+              mavenPomFile: "pom.xml"
+              mavenOptions: "-Xmx3072m"
+              javaHomeOption: "JDKVersion"
+              jdkVersionOption: "1.8"
+              jdkArchitectureOption: "x64"
+              publishJUnitResults: true
+              testResultsFiles: "**/surefire-reports/TEST-*.xml"
+              goals: "package"
 
-- stage: 'Test'
-  displayName: 'Deploy function app to test env'
-  dependsOn: Build
-  condition: succeeded()
-  jobs: 
-  - deployment: Deploy
-    pool:
-      vmImage: 'ubuntu-18.04'
-    environment: Test
-    variables:
-    - group: java-function-apps-test-env-variable-group
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: Azure Function App deploy
+          # to deploy to your app service
+          - task: CopyFiles@2
+            displayName: Copy Files
             inputs:
-              azureSubscription: $(AzureConnectionName)
-              appType: functionApp
-              appName: $(functionAppName)
-              resourceGroupName: $(resourceGroupName)
-              package: $(build.artifactstagingdirectory)
+              SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(appName)
+              Contents: "**"
+              TargetFolder: $(build.artifactstagingdirectory)
 
-- stage: 'Staging'
-  displayName: 'Deploy function app to staging env'
-  dependsOn: Build
-  condition: succeeded()
-  jobs: 
-  - deployment: Deploy
-    pool:
-      vmImage: 'ubuntu-18.04'
-    environment: Staging
-    variables:
-    - group: java-function-apps-stage-env-variable-group
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: Azure Function App deploy
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Artifact
             inputs:
-              azureSubscription: $(AzureConnectionName)
-              appType: functionApp
-              appName: $(functionAppName)
-              resourceGroupName: $(resourceGroupName)
-              package: $(build.artifactstagingdirectory)
+              PathtoPublish: $(build.artifactstagingdirectory)
+
+  - stage: "Dev"
+    displayName: "Deploy function app to dev env"
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: "ubuntu-18.04"
+        environment: dev
+        variables:
+          - group: java-function-apps-dev-env-variable-group
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureFunctionApp@1
+                  displayName: Azure Function App deploy
+                  inputs:
+                    azureSubscription: Azure_Development_Support_Plan
+                    appType: functionApp
+                    appName: $(functionAppName)
+                    resourceGroupName: $(resourceGroupName)
+                    package: $(build.artifactstagingdirectory)
+
+  - stage: "Test"
+    displayName: "Deploy function app to test env"
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: "ubuntu-18.04"
+        environment: Test
+        variables:
+          - group: java-function-apps-test-env-variable-group
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureFunctionApp@1
+                  displayName: Azure Function App deploy
+                  inputs:
+                    azureSubscription: Azure_Development_Support_Plan
+                    appType: functionApp
+                    appName: $(functionAppName)
+                    resourceGroupName: $(resourceGroupName)
+                    package: $(build.artifactstagingdirectory)
+
+  - stage: "Staging"
+    displayName: "Deploy function app to staging env"
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: "ubuntu-18.04"
+        environment: Staging
+        variables:
+          - group: java-function-apps-stage-env-variable-group
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureFunctionApp@1
+                  displayName: Azure Function App deploy
+                  inputs:
+                    azureSubscription: Azure_Development_Support_Plan
+                    appType: functionApp
+                    appName: $(functionAppName)
+                    resourceGroupName: $(resourceGroupName)
+                    package: $(build.artifactstagingdirectory)
