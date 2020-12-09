@@ -16,7 +16,7 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureConnectionName: '$(AzureConnectionName)'
+      azureConnectionName: Azure_Development_Support_Plan
       funcAppName: '$(functionAppName)'
       resourceGroupName: '$(resourceGroupName)'
       environment: 'DEV'
@@ -30,7 +30,7 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureConnectionName: '$(AzureConnectionName)'
+      azureConnectionName: Azure_Development_Support_Plan
       funcAppName: '$(FuncAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'TEST'
@@ -44,7 +44,7 @@ stages:
   jobs:
   - template: azure-pipelines-deployment-template.yml
     parameters:
-      azureConnectionName: '$(AzureConnectionName)'
+      azureConnectionName: Azure_Development_Support_Plan
       funcAppName: '$(FuncAppName)'
       resourceGroupName: '$(ResourceGroupName)'
       environment: 'PROD'
