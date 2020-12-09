@@ -1,12 +1,13 @@
 jobs:
-- deployment: Deploy
+- job: Deploy
   displayName: "Deploy RM Azure Functons"
   environment: $
-- task: AzureFunctionApp@1
-  displayName: Release package to Azure Funcion App
-  inputs:
-    azureSubscription: $
-    appType: functionApp
-    appName: $
-    resourceGroupName: $
-    package: $(System.DefaultWorkingDirectory)
+  steps:
+  - task: AzureFunctionApp@1
+    displayName: Release package to Azure Funcion App
+    inputs:
+      azureSubscription: $
+      appType: functionApp
+      appName: $
+      resourceGroupName: $
+      package: $(System.DefaultWorkingDirectory)
