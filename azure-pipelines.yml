@@ -44,7 +44,7 @@ stages:
           vmImage: "ubuntu-18.04"
         environment: Dev
         variables:
-          - group: java-function-apps-dev-env-variable-group
+          - group: release
         strategy:
           runOnce:
             deploy:
@@ -54,9 +54,9 @@ stages:
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
-                    azureSubscription: Azure_Development_Support_Plan
+                    azureSubscription: $(azureServiceConnection)
                     appType: functionApp
-                    appName: $(functionAppName)
+                    appName: $(FuncAppDevName)
                     resourceGroupName: $(resourceGroupName)
                     package: $(build.artifactstagingdirectory)
 
@@ -70,7 +70,7 @@ stages:
           vmImage: "ubuntu-18.04"
         environment: Test
         variables:
-          - group: java-function-apps-test-env-variable-group
+          - group: release
         strategy:
           runOnce:
             deploy:
@@ -80,9 +80,9 @@ stages:
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
-                    azureSubscription: Azure_Development_Support_Plan
+                    azureSubscription: $(azureServiceConnection)
                     appType: functionApp
-                    appName: $(functionAppName)
+                    appName: $(FuncAppTestName)
                     resourceGroupName: $(resourceGroupName)
                     package: $(build.artifactstagingdirectory)
 
@@ -96,7 +96,7 @@ stages:
           vmImage: "ubuntu-18.04"
         environment: Staging
         variables:
-          - group: java-function-apps-stage-env-variable-group
+          - group: release
         strategy:
           runOnce:
             deploy:
@@ -106,8 +106,8 @@ stages:
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
-                    azureSubscription: Azure_Development_Support_Plan
+                    azureSubscription: $(azureServiceConnection)
                     appType: functionApp
-                    appName: $(functionAppName)
+                    appName: $(FuncAppStageName)
                     resourceGroupName: $(resourceGroupName)
                     package: $(build.artifactstagingdirectory)
