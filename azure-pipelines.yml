@@ -50,14 +50,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: DownloadBuildArtifacts@0
-                  displayName: 'Download the build artifacts'
-                  inputs:
-                    buildType: 'current'
-                    downloadType: 'single'
-                    artifactName: 'drop'
-                    downloadPath: '$(system.defaultworkingdirectory)'
-
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
@@ -66,6 +58,7 @@ stages:
                     appName: $(FuncAppDevName)
                     resourceGroupName: $(resourceGroupName)
                     package: $(build.artifactstagingdirectory)
+                    deploymentMethod: zipDeploy
 
   - stage: "Test"
     displayName: "Deploy function app to test env"
@@ -82,14 +75,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: DownloadBuildArtifacts@0
-                  displayName: 'Download the build artifacts'
-                  inputs:
-                    buildType: 'current'
-                    downloadType: 'single'
-                    artifactName: 'drop'
-                    downloadPath: '$(system.defaultworkingdirectory)'
-
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
@@ -98,6 +83,7 @@ stages:
                     appName: $(FuncAppTestName)
                     resourceGroupName: $(resourceGroupName)
                     package: $(build.artifactstagingdirectory)
+                    deploymentMethod: zipDeploy
 
   - stage: "Staging"
     displayName: "Deploy function app to staging env"
@@ -114,14 +100,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: DownloadBuildArtifacts@0
-                  displayName: 'Download the build artifacts'
-                  inputs:
-                    buildType: 'current'
-                    downloadType: 'single'
-                    artifactName: 'drop'
-                    downloadPath: '$(system.defaultworkingdirectory)'
-
                 - task: AzureFunctionApp@1
                   displayName: Azure Function App deploy
                   inputs:
@@ -130,3 +108,4 @@ stages:
                     appName: $(FuncAppStageName)
                     resourceGroupName: $(resourceGroupName)
                     package: $(build.artifactstagingdirectory)
+                    deploymentMethod: zipDeploy
