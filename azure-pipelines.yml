@@ -12,7 +12,7 @@ stages:
         steps:
           - task: Maven@3
             inputs:
-              mavenPomFile: "pom.xml"
+              mavenPomFile: $(system.defaultworkingdirectory)/pom.xml
               mavenOptions: "-Xmx3072m"
               javaHomeOption: "JDKVersion"
               jdkVersionOption: "1.8"
@@ -33,7 +33,7 @@ stages:
             displayName: Publish Artifact
             inputs:
               PathtoPublish: $(build.artifactstagingdirectory)
-              artifactName: 'drop'
+              artifactName: "drop"
 
   - stage: "Dev"
     displayName: "Deploy function app to dev env"
