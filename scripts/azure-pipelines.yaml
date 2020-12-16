@@ -29,12 +29,6 @@ stages:
               Contents: "**"
               TargetFolder: $(build.artifactstagingdirectory)
 
-          - task: PublishBuildArtifacts@1
-            displayName: Publish Artifact
-            inputs:
-              PathtoPublish: $(build.artifactstagingdirectory)
-              artifactName: "drop"
-
   - stage: "Dev"
     displayName: "Deploy function app to dev env"
     dependsOn: Build
@@ -57,7 +51,7 @@ stages:
                     appType: functionApp
                     appName: $(FuncAppDevName)
                     resourceGroupName: $(resourceGroupName)
-                    package: $(System.DefaultWorkingDirectory)/**/*.zip
+                    package: $(build.artifactstagingdirectory)
                     deploymentMethod: zipDeploy
 
   - stage: "Test"
@@ -82,7 +76,7 @@ stages:
                     appType: functionApp
                     appName: $(FuncAppTestName)
                     resourceGroupName: $(resourceGroupName)
-                    package: $(System.DefaultWorkingDirectory)/**/*.zip
+                    package: $(build.artifactstagingdirectory)
                     deploymentMethod: zipDeploy
 
   - stage: "Staging"
@@ -107,5 +101,5 @@ stages:
                     appType: functionApp
                     appName: $(FuncAppStageName)
                     resourceGroupName: $(resourceGroupName)
-                    package: $(System.DefaultWorkingDirectory)/**/*.zip
+                    package: $(build.artifactstagingdirectory)
                     deploymentMethod: zipDeploy
