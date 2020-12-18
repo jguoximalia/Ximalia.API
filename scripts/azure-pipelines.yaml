@@ -58,7 +58,7 @@ stages:
                     appType: functionApp
                     appName: $(FuncAppDevName)
                     resourceGroupName: $(resourceGroupName)
-                    package: $(build.artifactstagingdirectory)
+                    package: '$(PIPELINE.WORKSPACE)/**/*.zip'
                     deploymentMethod: zipDeploy
 
   - stage: "Test"
@@ -83,7 +83,7 @@ stages:
                     appType: functionApp
                     appName: $(FuncAppTestName)
                     resourceGroupName: $(resourceGroupName)
-                    package: $(build.artifactstagingdirectory)
+                    package: '$(PIPELINE.WORKSPACE)/**/*.zip'
                     deploymentMethod: zipDeploy
 
   - stage: "Staging"
@@ -108,5 +108,5 @@ stages:
                     appType: functionApp
                     appName: $(FuncAppStageName)
                     resourceGroupName: $(resourceGroupName)
-                    package: $(build.artifactstagingdirectory)
+                    package: '$(PIPELINE.WORKSPACE)/**/*.zip'
                     deploymentMethod: zipDeploy
