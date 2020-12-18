@@ -21,13 +21,20 @@ stages:
               testResultsFiles: "**/surefire-reports/TEST-*.xml"
               goals: "package"
 
-          # to deploy to your app service
-          - task: CopyFiles@2
-            displayName: Copy Files
+          - task: ArchiveFiles@2
             inputs:
-              SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/ximalia-api-functions
-              Contents: "**"
-              TargetFolder: $(build.artifactstagingdirectory)
+              rootFolderOrFile: '$(Build.SourcesDirectory)/target/azure-functions/ximalia-api-functions/'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+              replaceExistingArchive: true
+
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Artifact
+            inputs:
+              PathtoPublish: $(Pipeline.Workspace)
+              artifactName: drop
+
 
   - stage: "Dev"
     displayName: "Deploy function app to dev env"
